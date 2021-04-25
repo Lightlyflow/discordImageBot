@@ -1,0 +1,10 @@
+# Python stuff
+__pycache__
+# Pycharm stuff
+.idea
+.env
+# Project stuff
+dest.txt
+build/
+dist/
+venv/
