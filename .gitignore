@@ -2,9 +2,8 @@
 __pycache__
 # Pycharm stuff
 .idea
-.env
 # Project stuff
+.env
 dest.txt
 build/
-dist/
 venv/
