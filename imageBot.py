@@ -19,25 +19,28 @@ async def on_ready():
 
 async def download(ctx, args):
     if get_dir() == "" or not len(args) == 3:
-        await ctx.send("Not valid. Should be *!image dd [numMessages] [downloadName]* "
+        await ctx.send("Not valid. Should be *!img dd [numMessages] [downloadName]* "
                        "and path should be set.")
         return
     limit = int(args[1])
     name = str(args[2])
+    file_counter = 1
     # https://discordpy.readthedocs.io/en/stable/api.html#discord.Attachment
     messages = await ctx.channel.history(limit=limit+1).flatten()
-    for i, msg in enumerate(messages[1:], 1):
+    for msg in messages[1:]:
         attachments = msg.attachments
         if not len(attachments) == 0:
-            filepath = f"{get_dir()}\\{name}{i}.{attachments[0].content_type.split('/')[1]}"
             await msg.add_reaction("\N{WHITE HEAVY CHECK MARK}")
-            await attachments[0].save(filepath)
-            await ctx.send(f"Saved file to *{filepath}*")
+            for attachment in attachments:
+                filepath = f"{get_dir()}\\{name}{file_counter}.{attachment.content_type.split('/')[1]}"
+                file_counter += 1
+                await attachments[0].save(filepath)
+                await ctx.send(f"Saved file to *{filepath}*")
         else:
             await msg.add_reaction("\N{NEGATIVE SQUARED CROSS MARK}")
 
 async def error_(ctx, args):
-    await ctx.send(f"**{args[0]}** is not a valid command!\nFor more help use the command *!image help*")
+    await ctx.send(f"**{args[0]}** is not a valid command!\nFor more help use the command *!img help*")
 
 async def set_path(ctx, args):
     path = args[1]
@@ -66,9 +69,9 @@ Commands:
     
 Example:
     Download the attachments from the last 3 messages:
-        *!image dd 3 mathhw*
+        *!img dd 3 mathhw*
     Set the path to a folder on your desktop:
-        *!image setpath C://Users//[username]//Desktop//[dirName]*
+        *!img setpath C://Users//[username]//Desktop//[dirName]*
     """
     await ctx.send(output)
 
