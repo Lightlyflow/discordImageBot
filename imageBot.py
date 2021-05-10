@@ -31,10 +31,10 @@ async def download(ctx, args):
         attachments = msg.attachments
         if not len(attachments) == 0:
             await msg.add_reaction("\N{WHITE HEAVY CHECK MARK}")
-            for attachment in attachments:
+            for i, attachment in enumerate(attachments):
                 filepath = f"{get_dir()}\\{name}{file_counter}.{attachment.content_type.split('/')[1]}"
                 file_counter += 1
-                await attachments[0].save(filepath)
+                await attachments[i].save(filepath)
                 await ctx.send(f"Saved file to *{filepath}*")
         else:
             await msg.add_reaction("\N{NEGATIVE SQUARED CROSS MARK}")
