@@ -3,7 +3,5 @@ __pycache__
 # Pycharm stuff
 .idea
 # Project stuff
-.env
-dest.txt
 build/
 venv/
